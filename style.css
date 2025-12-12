@@ -141,12 +141,8 @@ body {
 
     100% {
         opacity: 0;
-        transform: translateY(20px) rotate(90deg) scale(0.5);
+        transform: translateY(20px) rotate(360deg) scale(0.5);
     }
-}
-
-.delete-animate {
-    animation: rotateOutDown 0.45s ease forwards;
 }
 
 #task-list li .checkbox {
@@ -159,7 +155,7 @@ body {
     appearance: none;
     cursor: pointer;
     border: 2px solid rgba(255, 255, 255, 0.3);
-    transition: all 0.3s ease;
+    transition: all 0.5s ease;
 }
 
 #task-list li .checkbox:checked {
@@ -217,8 +213,6 @@ body {
     background-color: #ff6f91;
 }
 
-
-
 .edit-input {
     border: none;
     outline: none;
@@ -227,9 +221,21 @@ body {
     border-radius: 22px;
     background: rgba(255, 194, 209, 0.3);
     color: #dbdbdb;
+    opacity: 0;
+    width: 0;
+    transition: all 0.5s ease;
 }
 
 .edit-input:focus {
     border: 2px solid #ff6f91;
     box-shadow: 0 0 30px #ff6f91;
+}
+
+.edit-input.show {
+    opacity: 1;
+    width: 100%;
+}
+
+.edit-btn i {
+    transition: transform 0.5s ease, color 0.3s ease;
 }

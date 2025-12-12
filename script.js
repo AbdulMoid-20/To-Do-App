@@ -26,32 +26,48 @@ const addTask = (event) => {
     const editBtn = li.querySelector('.edit-btn');
     const deleteBtn = li.querySelector('.delete-btn');
 
-    // DELETE
+    //DELETE
     deleteBtn.addEventListener('click', function () {
-        li.classList.add('delete-animate');
 
-        // Remove only after animation finishes
+        li.style.animation = 'rotateOutDown 0.5s forwards';
         li.addEventListener('animationend', function () {
             li.remove();
+
         });
     });
-    // EDIT
+
+    //EDIT & SAVE
     editBtn.addEventListener('click', function () {
         const textSpan = li.querySelector('span');
         const oldText = textSpan.textContent;
 
         const input = document.createElement('input');
-        input.setAttribute('class', 'edit-input')
+        input.setAttribute('class', 'edit-input');
         input.type = 'text';
         input.value = oldText;
 
         li.replaceChild(input, textSpan);
 
-        input.addEventListener('blur', function () {
-            textSpan.textContent = input.value || oldText;
-            li.replaceChild(textSpan, input);
-        });
+        // trigger transition
+        setTimeout(() => input.classList.add('show'), 10); // slight delay to start CSS transition
+        input.focus();
 
+        // Change icon from pen to save
+        editBtn.innerHTML = '<i class="fa fa-save"></i>';
+
+        input.addEventListener('blur', function () {
+            // remove transition class for smooth reverse
+            input.classList.remove('show');
+
+            // Wait for transition to finish before replacing element
+            setTimeout(() => {
+                textSpan.textContent = input.value || oldText;
+                li.replaceChild(textSpan, input);
+
+                // Change icon back from save to pen
+                editBtn.innerHTML = '<i class="fa fa-pen"></i>';
+            }, 300); // same as CSS transition duration
+        });
     });
 
 
