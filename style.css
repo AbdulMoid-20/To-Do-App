@@ -290,3 +290,110 @@ body {
 .edit-btn i {
     transition: transform 0.5s ease, color 0.3s ease;
 }
+
+/* ========================= */
+/*      RESPONSIVE DESIGN    */
+/* ========================= */
+
+/* Medium screens – tablets */
+@media (max-width: 1024px) {
+    .todo-app {
+        width: 60%;
+        padding: 1.8rem;
+        gap: 25px;
+    }
+
+    #task-list li {
+        font-size: 1.3rem;
+        padding: 8px 12px;
+    }
+
+    .input-area input {
+        font-size: 1rem;
+    }
+
+    #numbers {
+        width: 70px;
+        height: 70px;
+        font-size: 1.3rem;
+    }
+}
+
+/* Small screens – large phones */
+@media (max-width: 768px) {
+    body {
+        padding: 20px;
+    }
+
+    .todo-app {
+        width: 100%;
+        padding: 1.5rem;
+        gap: 20px;
+    }
+
+    .stats-container {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    #numbers {
+        width: 65px;
+        height: 65px;
+        font-size: 1.2rem;
+    }
+
+    .input-area {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .input-area button {
+        margin-left: 0;
+        width: 45px;
+        height: 45px;
+    }
+
+    #task-list li {
+        font-size: 1.2rem;
+        /* flex-wrap: wrap; */
+        padding: 10px 15px;
+    }
+
+    .task-btn {
+        margin-top: 8px;
+        justify-content: flex-end;
+        width: 100%;
+    }
+}
+
+/* Extra small screens – small phones */
+@media (max-width: 480px) {
+    .todo-app {
+        width: 100%;
+        padding: 1.2rem;
+    }
+
+    #numbers {
+        width: 55px;
+        height: 55px;
+        font-size: 1rem;
+    }
+
+    .input-area input {
+        font-size: 0.95rem;
+        padding: 8px 14px;
+    }
+
+    .task-btn button {
+        width: 27px;
+        height: 27px;
+        font-size: 0.7rem;
+    }
+
+    #task-list li {
+        font-size: 1rem;
+        width: auto;
+        /* padding: 10px; */
+    }
+}
