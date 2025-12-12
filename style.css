@@ -12,8 +12,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(54deg, #d53369 0%, #daae51 100%);
-
+    background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
 }
 
 .container {
@@ -41,6 +40,55 @@ body {
     backdrop-filter: blur(10px);
 }
 
+.stats-container {
+    padding: 15px 20px;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.18);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    grid-area: 20px;
+    width: 100%;
+}
+
+.details {
+    width: 100%;
+}
+
+.details h3 {
+    color: #fff;
+}
+
+#progress-bar {
+    width: 100%;
+    height: 7px;
+    background: rgba(255, 194, 209, 0.3);
+    border-radius: 20px;
+    position: relative;
+    margin-top: 15px;
+}
+
+#progress {
+    width: 0%;
+    height: 100%;
+    background: #d53369;
+    border-radius: 20px;
+    transition: width 0.3s ease;
+}
+
+#numbers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    background: #d53369;
+    border: 2px solid rgba(255, 194, 209, 0.3);
+    font-weight: bold;
+    border-radius: 50%;
+    font-size: 1.5rem;
+}
+
 .input-area {
     display: flex;
     justify-content: space-between;
@@ -64,8 +112,8 @@ body {
 }
 
 .input-area input:focus {
-    border: 1px solid #ff6f91;
-    box-shadow: 0 0 30px #ff6f91;
+    border: 1px solid #d53369;
+    box-shadow: 0 0 30px #d53369;
 }
 
 .input-area button {
@@ -106,7 +154,7 @@ body {
     margin-bottom: 10px;
     padding: 8px 10px 8px 10px;
     border-radius: 30px;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     color: #fff;
     position: relative;
     transition: box-shadow 0.3s ease;
@@ -116,7 +164,6 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* ========== Add Task Animation ========== */
 @keyframes fadeInRotateUp {
     0% {
         opacity: 0;
@@ -160,11 +207,11 @@ body {
 
 #task-list li input[type="checkbox"]:checked+span {
     color: #dbdbdb;
-    text-decoration: line-through;
+    text-decoration: line-through #d53369 2px;
 }
 
 #task-list li .checkbox:checked {
-    background: #ff6f91;
+    background: #d53369;
     transform: scale(1.2);
 }
 
@@ -197,7 +244,6 @@ body {
     border-radius: 50%;
     width: 30px;
     height: 30px;
-    color: #fff;
     font-size: 0.8rem;
     cursor: pointer;
     display: flex;
@@ -215,7 +261,7 @@ body {
 }
 
 .task-btn .delete-btn {
-    background-color: #ff6f91;
+    background-color: #d53369;
 }
 
 .edit-input {
@@ -232,8 +278,8 @@ body {
 }
 
 .edit-input:focus {
-    border: 2px solid #ff6f91;
-    box-shadow: 0 0 30px #ff6f91;
+    border: 2px solid #d53369;
+    box-shadow: 0 0 30px #d53369;
 }
 
 .edit-input.show {

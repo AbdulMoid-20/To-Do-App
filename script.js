@@ -1,8 +1,18 @@
 const taskInput = document.getElementById('task-input');
 const addTaskBtn = document.getElementById('add-task-btn');
 const taskList = document.getElementById('task-list');
+const progressBar = document.getElementById('progress');
+const progressNumber = document.getElementById('numbers');
 
-const addTask = (event) => {
+const updateProgress = () => {
+    const totalTask = taskList.children.length;
+    const completedTask = taskList.querySelectorAll('.checkbox:checked').length;
+
+    progressBar.style.width = totalTask ? `${(completedTask / totalTask) * 100}%` : '0%';
+    progressNumber.textContent = `${completedTask} / ${totalTask}`;
+};
+
+const addTask = (event, checkCompletion = true) => {
     if (event) event.preventDefault();
 
     const taskText = taskInput.value.trim();
@@ -37,6 +47,23 @@ const addTask = (event) => {
 
     const editBtn = li.querySelector('.edit-btn');
     const deleteBtn = li.querySelector('.delete-btn');
+    const textSpan = li.querySelector('span');
+
+    // Checkbox change - toggle completed & disable/enable edit
+    checkbox.addEventListener('change', function () {
+        if (checkbox.checked) {
+            textSpan.classList.add('completed');
+            editBtn.disabled = true;
+            editBtn.style.opacity = 0.5; // visually show disabled
+            editBtn.style.cursor = 'not-allowed';
+        } else {
+            textSpan.classList.remove('completed');
+            editBtn.disabled = false;
+            editBtn.style.opacity = 1;
+            editBtn.style.cursor = 'pointer';
+        }
+        updateProgress();
+    });
 
     //DELETE
     deleteBtn.addEventListener('click', function () {
@@ -44,7 +71,7 @@ const addTask = (event) => {
         li.style.animation = 'rotateOutDown 0.5s forwards';
         li.addEventListener('animationend', function () {
             li.remove();
-
+            updateProgress();
         });
     });
 
@@ -60,26 +87,23 @@ const addTask = (event) => {
 
         li.replaceChild(input, textSpan);
 
-        // trigger transition
-        setTimeout(() => input.classList.add('show'), 10); // slight delay to start CSS transition
+        setTimeout(() => input.classList.add('show'), 10);
         input.focus();
 
         // Change icon from pen to save
         editBtn.innerHTML = '<i class="fa fa-save"></i>';
 
         const saveEdit = () => {
-            input.classList.remove('show'); // remove transition class
+            input.classList.remove('show');
             setTimeout(() => {
                 textSpan.textContent = input.value || oldText;
                 li.replaceChild(textSpan, input);
                 editBtn.innerHTML = '<i class="fa fa-pen"></i>';
-            }, 300); // match CSS transition duration
+            }, 300);
         };
 
-        // Save on blur
         input.addEventListener('blur', saveEdit);
 
-        // Save on Enter key press
         input.addEventListener('keydown', function (e) {
             if (e.key === 'Enter') {
                 saveEdit();
@@ -87,10 +111,9 @@ const addTask = (event) => {
         });
     });
 
-
-
     taskList.appendChild(li);
     taskInput.value = "";
+    updateProgress();
 };
 
 addTaskBtn.addEventListener('click', addTask);
