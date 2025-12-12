@@ -23,6 +23,18 @@ const addTask = (event) => {
     `;
 
     li.classList.add("animate");
+
+    const checkbox = li.querySelector('.checkbox');
+
+    checkbox.addEventListener('change', function () {
+        const textSpan = li.querySelector('span');
+        if (checkbox.checked) {
+            textSpan.classList.add('completed');
+        } else {
+            textSpan.classList.remove('completed');
+        }
+    });
+
     const editBtn = li.querySelector('.edit-btn');
     const deleteBtn = li.querySelector('.delete-btn');
 
@@ -55,20 +67,26 @@ const addTask = (event) => {
         // Change icon from pen to save
         editBtn.innerHTML = '<i class="fa fa-save"></i>';
 
-        input.addEventListener('blur', function () {
-            // remove transition class for smooth reverse
-            input.classList.remove('show');
-
-            // Wait for transition to finish before replacing element
+        const saveEdit = () => {
+            input.classList.remove('show'); // remove transition class
             setTimeout(() => {
                 textSpan.textContent = input.value || oldText;
                 li.replaceChild(textSpan, input);
-
-                // Change icon back from save to pen
                 editBtn.innerHTML = '<i class="fa fa-pen"></i>';
-            }, 300); // same as CSS transition duration
+            }, 300); // match CSS transition duration
+        };
+
+        // Save on blur
+        input.addEventListener('blur', saveEdit);
+
+        // Save on Enter key press
+        input.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                saveEdit();
+            }
         });
     });
+
 
 
     taskList.appendChild(li);
