@@ -291,9 +291,7 @@ body {
     transition: transform 0.5s ease, color 0.3s ease;
 }
 
-/* ========================= */
-/*      RESPONSIVE DESIGN    */
-/* ========================= */
+/* RESPONSIVE DESIGN */
 
 /* Medium screens – tablets */
 @media (max-width: 1024px) {
@@ -356,7 +354,6 @@ body {
 
     #task-list li {
         font-size: 1.2rem;
-        /* flex-wrap: wrap; */
         padding: 10px 15px;
     }
 
@@ -394,13 +391,10 @@ body {
     #task-list li {
         font-size: 1rem;
         width: auto;
-        /* padding: 10px; */
     }
 }
 
-/* ========================= */
-/*        CONFETTI           */
-/* ========================= */
+/* Celebration */
 
 #confetti-canvas {
     position: fixed;
