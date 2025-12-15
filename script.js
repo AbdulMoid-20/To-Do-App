@@ -3,14 +3,90 @@ const addTaskBtn = document.getElementById('add-task-btn');
 const taskList = document.getElementById('task-list');
 const progressBar = document.getElementById('progress');
 const progressNumber = document.getElementById('numbers');
+const confettiCanvas = document.getElementById('confetti-canvas');
+const ctx = confettiCanvas.getContext('2d');
+
+const resizeCanvas = () => {
+    confettiCanvas.width = window.innerWidth;
+    confettiCanvas.height = window.innerHeight;
+};
+
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+let confettiPieces = [];
+let confettiFired = false;
+
+const colors = ['#ff0a54', '#ff477e', '#ff7096', '#ffd166', '#06d6a0', '#118ab2'];
+
+const createConfetti = (count = 150) => {
+    confettiPieces = [];
+
+    for (let i = 0; i < count; i++) {
+        confettiPieces.push({
+            x: Math.random() * confettiCanvas.width,
+            y: -Math.random() * confettiCanvas.height,
+            size: Math.random() * 6 + 4,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            speedY: Math.random() * 4 + 3,
+            speedX: Math.random() * 2 - 1,
+            rotation: Math.random() * 360
+        });
+    }
+};
+
+const animateConfetti = () => {
+    ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+
+    confettiPieces.forEach(p => {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation * Math.PI / 180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+        ctx.restore();
+
+        p.y += p.speedY;
+        p.x += p.speedX;
+        p.rotation += 6;
+    });
+
+    confettiPieces = confettiPieces.filter(p => p.y < confettiCanvas.height + 20);
+
+    if (confettiPieces.length > 0) {
+        requestAnimationFrame(animateConfetti);
+    }
+};
+
+const celebration = document.getElementById('celebration');
 
 const updateProgress = () => {
     const totalTask = taskList.children.length;
     const completedTask = taskList.querySelectorAll('.checkbox:checked').length;
 
-    progressBar.style.width = totalTask ? `${(completedTask / totalTask) * 100}%` : '0%';
+    progressBar.style.width = totalTask
+        ? `${(completedTask / totalTask) * 100}%`
+        : '0%';
+
     progressNumber.textContent = `${completedTask} / ${totalTask}`;
+
+    // 🎉 Celebration logic
+    if (totalTask > 0 && completedTask === totalTask) {
+        celebration.classList.add('show');
+        setTimeout(() => celebration.classList.remove('show'), 3000);
+    }
+
+    if (totalTask > 0 && completedTask === totalTask && !confettiFired) {
+        confettiFired = true;
+        createConfetti(200);
+        animateConfetti();
+    }
+
+    if (completedTask < totalTask) {
+        confettiFired = false;
+    }
 };
+
 
 const addTask = (event, checkCompletion = true) => {
     if (event) event.preventDefault();
